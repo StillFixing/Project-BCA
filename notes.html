@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Notes | BCA CDOE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f4f7fb;
+            --paper: #ffffff;
+            --paper-2: #eef5ff;
+            --line: #dfe8f5;
+            --text: #18212f;
+            --muted: #5d6a7d;
+            --primary: #0d5adf;
+            --primary-deep: #0a3fa6;
+            --accent: #ebf2ff;
+            --shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Inter", sans-serif;
+            background: linear-gradient(180deg, #f7f9fc 0%, #eef4ff 100%);
+            color: var(--text);
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .top-strip {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 18px 28px 10px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text);
+            font-size: 0.8rem;
+        }
+
+        .brand-mark {
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-deep));
+            color: white;
+            display: grid;
+            place-items: center;
+            font-size: 0.8rem;
+            box-shadow: var(--shadow);
+        }
+
+        .home-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            border-radius: 999px;
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.7);
+            color: var(--text);
+            font-weight: 600;
+            backdrop-filter: blur(8px);
+        }
+
+        .notes-shell {
+            max-width: 1200px;
+            margin: 8px auto 42px;
+            padding: 0 28px;
+            display: grid;
+            grid-template-columns: 270px 1fr;
+            gap: 28px;
+        }
+
+        .sidebar {
+            background: rgba(255,255,255,0.8);
+            border: 1px solid var(--line);
+            border-radius: 26px;
+            padding: 22px 18px;
+            box-shadow: var(--shadow);
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+
+        .sidebar-label {
+            font-size: 0.72rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin: 0 0 16px;
+            font-weight: 700;
+        }
+
+        .semester-list {
+            display: grid;
+            gap: 10px;
+        }
+
+        .semester-pill {
+            display: block;
+            padding: 12px 14px;
+            border-radius: 14px;
+            background: var(--paper-2);
+            color: var(--text);
+            border: 1px solid transparent;
+            font-weight: 700;
+        }
+
+        .semester-pill.active {
+            background: linear-gradient(135deg, var(--primary), var(--primary-deep));
+            color: white;
+            box-shadow: 0 10px 20px rgba(13, 90, 223, 0.25);
+        }
+
+        .content-panel {
+            background: rgba(255,255,255,0.62);
+            border: 1px solid var(--line);
+            border-radius: 28px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .notes-top {
+            background: linear-gradient(135deg, #0e1d38 0%, #173d88 42%, #0d5adf 100%);
+            padding: 34px 30px 26px;
+            color: white;
+        }
+
+        .eyebrow {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255,255,255,0.18);
+            border-radius: 999px;
+            padding: 8px 12px;
+            font-size: 0.72rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 14px;
+        }
+
+        .notes-top h1 {
+            margin: 0 0 10px;
+            font-size: clamp(2.1rem, 3vw, 3.2rem);
+            line-height: 1.1;
+        }
+
+        .notes-top p {
+            margin: 0;
+            max-width: 700px;
+            color: rgba(255,255,255,0.8);
+            font-size: 1.04rem;
+        }
+
+        .notes-body {
+            padding: 26px 30px 30px;
+            background: linear-gradient(180deg, #ffffff 0%, #f9fbff 100%);
+        }
+
+        .section-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            margin-bottom: 18px;
+        }
+
+        .section-label {
+            color: var(--primary);
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            font-size: 0.72rem;
+        }
+
+        .notes-grid {
+            display: grid;
+            gap: 16px;
+        }
+
+        .note-item {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            gap: 18px;
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 20px;
+            padding: 18px 18px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .note-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 28px rgba(15, 23, 42, 0.06);
+        }
+
+        .file-badge {
+            width: 54px;
+            height: 54px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #eaf2ff, #dfeeff);
+            color: var(--primary-deep);
+            display: grid;
+            place-items: center;
+            font-weight: 800;
+            font-size: 0.8rem;
+            border: 1px solid rgba(13, 90, 223, 0.08);
+        }
+
+        .note-copy h3 {
+            margin: 0 0 4px;
+            font-size: 1.08rem;
+        }
+
+        .note-copy p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+
+        .note-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .note-actions a {
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 1px solid var(--line);
+            color: var(--text);
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .note-actions a.primary {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        footer {
+            text-align: center;
+            padding: 14px 20px 30px;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 900px) {
+            .notes-shell {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: static;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .top-strip,
+            .notes-shell {
+                padding-left: 18px;
+                padding-right: 18px;
+            }
+
+            .note-item {
+                grid-template-columns: 1fr;
+                align-items: flex-start;
+            }
+
+            .note-actions {
+                width: 100%;
+            }
+
+            .note-actions a {
+                flex: 1;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="top-strip">
+        <div class="brand">
+            <span class="brand-mark">B</span>
+            BCA CDOE
+        </div>
+        <a class="home-link" href="index.html">← Home</a>
+    </div>
+
+    <main class="notes-shell">
+        <aside class="sidebar">
+            <p class="sidebar-label">Semesters</p>
+            <div class="semester-list">
+                <a href="#semester-1" class="semester-pill active">Semester 1</a>
+                <a href="#semester-2" class="semester-pill">Semester 2</a>
+                <a href="#semester-3" class="semester-pill">Semester 3</a>
+                <a href="#semester-4" class="semester-pill">Semester 4</a>
+                <a href="#semester-5" class="semester-pill">Semester 5</a>
+                <a href="#semester-6" class="semester-pill">Semester 6</a>
+            </div>
+        </aside>
+
+        <section class="content-panel">
+            <div class="notes-top">
+                <div class="eyebrow">Study Resources</div>
+                <h1>Notes & Learning Materials</h1>
+                <p>All important lecture material, reference notes, and semester-wise study files collected in one clean place.</p>
+            </div>
+
+            <div class="notes-body">
+                <div class="section-head">
+                    <div class="section-label">Semester 1</div>
+                </div>
+
+                <div class="notes-grid" id="semester-1">
+                    <article class="note-item">
+                        <div class="file-badge">PDF</div>
+                        <div class="note-copy">
+                            <h3>BCA 101 - Block 1</h3>
+                            <p>Foundations of computer basics and introductory concepts.</p>
+                        </div>
+                        <div class="note-actions">
+                            <a href="Semester_1/BCA_101_block_1.pdf" target="_blank">Open</a>
+                        </div>
+                    </article>
+
+                    <article class="note-item">
+                        <div class="file-badge">PDF</div>
+                        <div class="note-copy">
+                            <h3>BCA 101 - Block 2</h3>
+                            <p>Additional study material for the first semester core subject.</p>
+                        </div>
+                        <div class="note-actions">
+                            <a href="Semester_1/BCA_101_Block_2.pdf" target="_blank">Open</a>
+                        </div>
+                    </article>
+
+                    <article class="note-item">
+                        <div class="file-badge">PDF</div>
+                        <div class="note-copy">
+                            <h3>BCA 101 - Block 3</h3>
+                            <p>Extended reading and preparation notes for the subject.</p>
+                        </div>
+                        <div class="note-actions">
+                            <a href="Semester_1/BCA_101_Block_3.pdf" target="_blank">Open</a>
+                        </div>
+                    </article>
+
+                    <article class="note-item">
+                        <div class="file-badge">PDF</div>
+                        <div class="note-copy">
+                            <h3>BCA 102 - Block I</h3>
+                            <p>Core notes for the second major course in semester 1.</p>
+                        </div>
+                        <div class="note-actions">
+                            <a href="Semester_1/BCA_102_Block_I.pdf" target="_blank">Open</a>
+                        </div>
+                    </article>
+
+                    <article class="note-item">
+                        <div class="file-badge">PDF</div>
+                        <div class="note-copy">
+                            <h3>BCA 103 - Block I</h3>
+                            <p>Study guide and notes for foundation programming subjects.</p>
+                        </div>
+                        <div class="note-actions">
+                            <a href="Semester_1/BCA_103_Block_I.pdf" target="_blank">Open</a>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="section-head" style="margin-top: 28px;">
+                    <div class="section-label">Semester 2</div>
+                </div>
+
+                <div class="notes-grid" id="semester-2">
+                    <article class="note-item">
+                        <div class="file-badge">PDF</div>
+                        <div class="note-copy">
+                            <h3>BCA 201 - Math II</h3>
+                            <p>Mathematical concepts and problem-solving notes.</p>
+                        </div>
+                        <div class="note-actions">
+                            <a href="Semester_2/BCA_201_Math_II.pdf" target="_blank">Open</a>
+                        </div>
+                    </article>
+
+                    <article class="note-item">
+                        <div class="file-badge">PDF</div>
+                        <div class="note-copy">
+                            <h3>BCA 202 - Discrete Math</h3>
+                            <p>Logic, sets, graphs, and abstract reasoning notes.</p>
+                        </div>
+                        <div class="note-actions">
+                            <a href="Semester_2/BCA_202_Discrete_Math.pdf" target="_blank">Open</a>
+                        </div>
+                    </article>
+
+                    <article class="note-item">
+                        <div class="file-badge">PDF</div>
+                        <div class="note-copy">
+                            <h3>BCA 203 - Data Structure</h3>
+                            <p>Important data structure topics and examples.</p>
+                        </div>
+                        <div class="note-actions">
+                            <a href="Semester_2/BCA_203_Data_Structure.pdf" target="_blank">Open</a>
+                        </div>
+                    </article>
+
+                    <article class="note-item">
+                        <div class="file-badge">PDF</div>
+                        <div class="note-copy">
+                            <h3>BCA 204 - Accounting</h3>
+                            <p>Accounting principles and business fundamentals notes.</p>
+                        </div>
+                        <div class="note-actions">
+                            <a href="Semester_2/BCA_204_Accounting.pdf" target="_blank">Open</a>
+                        </div>
+                    </article>
+
+                    <article class="note-item">
+                        <div class="file-badge">PDF</div>
+                        <div class="note-copy">
+                            <h3>BCA 205 - Computer Architecture</h3>
+                            <p>System design and architecture notes for second semester.</p>
+                        </div>
+                        <div class="note-actions">
+                            <a href="Semester_2/BCA_205_Computer_Architecture.pdf" target="_blank">Open</a>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="section-head" style="margin-top: 28px;">
+                    <div class="section-label">Semester 3</div>
+                </div>
+
+                <div class="notes-grid" id="semester-3">
+                    <article class="note-item">
+                        <div class="file-badge">PDF</div>
+                        <div class="note-copy">
+                            <h3>BCA 301 - Math III</h3>
+                            <p>Advanced mathematical theory and examples.</p>
+                        </div>
+                        <div class="note-actions">
+                            <a href="Semester_3/BCA_301_Math_III.pdf" target="_blank">Open</a>
+                        </div>
+                    </article>
+
+                    <article class="note-item">
+                        <div class="file-badge">PDF</div>
+                        <div class="note-copy">
+                            <h3>BCA 302 - Theory of Computing</h3>
+                            <p>Formal language, automata, and computation theory notes.</p>
+                        </div>
+                        <div class="note-actions">
+                            <a href="Semester_3/BCA_302_Theory_of_Computing.pdf" target="_blank">Open</a>
+                        </div>
+                    </article>
+
+                    <article class="note-item">
+                        <div class="file-badge">PDF</div>
+                        <div class="note-copy">
+                            <h3>BCA 303 - Web Technology</h3>
+                            <p>HTML, CSS, JavaScript, and web design essentials.</p>
+                        </div>
+                        <div class="note-actions">
+                            <a href="Semester_3/BCA_303_Web_Tech.pdf" target="_blank">Open</a>
+                        </div>
+                    </article>
+
+                    <article class="note-item">
+                        <div class="file-badge">PDF</div>
+                        <div class="note-copy">
+                            <h3>BCA 304 - Computer Graphics</h3>
+                            <p>Graphics fundamentals, transformation, and rendering notes.</p>
+                        </div>
+                        <div class="note-actions">
+                            <a href="Semester_3/BCA_304_Computer_Graphics.pdf" target="_blank">Open</a>
+                        </div>
+                    </article>
+
+                    <article class="note-item">
+                        <div class="file-badge">PDF</div>
+                        <div class="note-copy">
+                            <h3>BCA 305 - Design & Analysis</h3>
+                            <p>Algorithm analysis, complexity, and design techniques.</p>
+                        </div>
+                        <div class="note-actions">
+                            <a href="Semester_3/BCA_305_Design_Analysis_Algorithms.pdf" target="_blank">Open</a>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="section-head" style="margin-top: 28px;">
+                    <div class="section-label">Semester 4</div>
+                </div>
+
+                <div class="notes-grid" id="semester-4">
+                    <article class="note-item">
+                        <div class="file-badge">PDF</div>
+                        <div class="note-copy">
+                            <h3>BCA 401 Notes</h3>
+                            <p>Numerical analysis and scientific computer subject notes.</p>
+                        </div>
+                        <div class="note-actions">
+                            <a href="Semester_4/bca-401 notes.pdf" target="_blank">Open</a>
+                        </div>
+                    </article>
+
+                    <article class="note-item">
+                        <div class="file-badge">PDF</div>
+                        <div class="note-copy">
+                            <h3>BCA 402 Notes</h3>
+                            <p>Database management system notes and theory references.</p>
+                        </div>
+                        <div class="note-actions">
+                            <a href="Semester_4/bca-402 notes.pdf" target="_blank">Open</a>
+                        </div>
+                    </article>
+
+                    <article class="note-item">
+                        <div class="file-badge">PDF</div>
+                        <div class="note-copy">
+                            <h3>BCA 403 Notes</h3>
+                            <p>Operating systems concepts and study notes.</p>
+                        </div>
+                        <div class="note-actions">
+                            <a href="Semester_4/bca-403 notes.pdf" target="_blank">Open</a>
+                        </div>
+                    </article>
+
+                    <article class="note-item">
+                        <div class="file-badge">PDF</div>
+                        <div class="note-copy">
+                            <h3>BCA 404 Notes</h3>
+                            <p>Object-oriented programming with Java notes.</p>
+                        </div>
+                        <div class="note-actions">
+                            <a href="Semester_4/bca-404 notes.pdf" target="_blank">Open</a>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="section-head" style="margin-top: 28px;">
+                    <div class="section-label">Semester 5</div>
+                </div>
+
+                <div class="notes-grid" id="semester-5">
+                    <article class="note-item">
+                        <div class="file-badge">PDF</div>
+                        <div class="note-copy">
+                            <h3>BCA 501 Notes</h3>
+                            <p>Networking and data communication study material.</p>
+                        </div>
+                        <div class="note-actions">
+                            <a href="Semester_5/bca-501 notes.pdf" target="_blank">Open</a>
+                        </div>
+                    </article>
+
+                    <article class="note-item">
+                        <div class="file-badge">PDF</div>
+                        <div class="note-copy">
+                            <h3>BCA 502 Notes</h3>
+                            <p>Operations research lecture notes and concepts.</p>
+                        </div>
+                        <div class="note-actions">
+                            <a href="Semester_5/bca-502 notes.pdf" target="_blank">Open</a>
+                        </div>
+                    </article>
+
+                    <article class="note-item">
+                        <div class="file-badge">PDF</div>
+                        <div class="note-copy">
+                            <h3>BCA 503 Notes</h3>
+                            <p>Software engineering concept notes and references.</p>
+                        </div>
+                        <div class="note-actions">
+                            <a href="Semester_5/bca-503 notes.pdf" target="_blank">Open</a>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="section-head" style="margin-top: 28px;">
+                    <div class="section-label">Semester 6</div>
+                </div>
+
+                <div class="notes-grid" id="semester-6">
+                    <article class="note-item">
+                        <div class="file-badge">PDF</div>
+                        <div class="note-copy">
+                            <h3>BCA 601 Notes</h3>
+                            <p>Artificial intelligence and modern computing references.</p>
+                        </div>
+                        <div class="note-actions">
+                            <a href="Semester_6/bca-601 notes.pdf" target="_blank">Open</a>
+                        </div>
+                    </article>
+
+                    <article class="note-item">
+                        <div class="file-badge">PDF</div>
+                        <div class="note-copy">
+                            <h3>BCA 602 Notes</h3>
+                            <p>System software and core architecture notes.</p>
+                        </div>
+                        <div class="note-actions">
+                            <a href="Semester_6/bca-602 notes.pdf" target="_blank">Open</a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        © 2026 BCA Distance Notes | Created by Ajoy & Jahangir
+    </footer>
+</body>
+
+</html>

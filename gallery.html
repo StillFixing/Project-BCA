@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery | BCA CDOE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="gallery.css">
+</head>
+<body>
+
+<header class="navbar">
+    <div class="nav-inner">
+        <div class="logo">
+            <img src="assets/brand/dibrugarh-logo.gif" alt="University Logo">
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html" class="home-btn">Home</a></li>
+            <li><a href="notes.html">Notes</a></li>
+            <li><a href="pyq.html">PYQs</a></li>
+            <li><a href="docs/syllabus.pdf">Syllabus</a></li>
+            <li><a href="about.html">About Us</a></li>
+        </ul>
+    </div>
+</header>
+
+<section class="gallery-header">
+    <div class="gallery-header__inner">
+        <span class="eyebrow">Campus Memories</span>
+        <h1>Gallery</h1>
+        <p>A glimpse of the campus, classrooms, events, and student life.</p>
+    </div>
+</section>
+
+<main class="gallery-shell">
+    <section class="gallery-grid" aria-label="University photo gallery">
+        <figure class="gallery-item tall"><img src="assets/gallery/gallery-1.jpg" alt="Gallery image 1"></figure>
+        <figure class="gallery-item"><img src="assets/gallery/gallery-2.jpg" alt="Gallery image 2"></figure>
+        <figure class="gallery-item wide"><img src="assets/gallery/gallery-3.jpg" alt="Gallery image 3"></figure>
+        <figure class="gallery-item"><img src="assets/gallery/gallery-4.jpg" alt="Gallery image 4"></figure>
+        <figure class="gallery-item"><img src="assets/gallery/gallery-5.jpg" alt="Gallery image 5"></figure>
+        <figure class="gallery-item tall"><img src="assets/gallery/gallery-6.jpg" alt="Gallery image 6"></figure>
+        <figure class="gallery-item wide"><img src="assets/gallery/gallery-7.jpg" alt="Gallery image 7"></figure>
+        <figure class="gallery-item"><img src="assets/gallery/gallery-8.jpg" alt="Gallery image 8"></figure>
+        <figure class="gallery-item"><img src="assets/gallery/gallery-9.jpg" alt="Gallery image 9"></figure>
+        <figure class="gallery-item wide"><img src="assets/gallery/gallery-10.jpg" alt="Gallery image 10"></figure>
+        <figure class="gallery-item"><img src="assets/gallery/gallery-11.jpg" alt="Gallery image 11"></figure>
+        <figure class="gallery-item"><img src="assets/gallery/gallery-12.jpg" alt="Gallery image 12"></figure>
+    </section>
+</main>
+
+<div class="gallery-modal" id="galleryModal" aria-hidden="true">
+    <div class="gallery-modal__content" role="dialog" aria-modal="true" aria-label="Full size gallery image">
+        <button class="gallery-modal__close" type="button" aria-label="Close image">×</button>
+        <img class="gallery-modal__image" src="" alt="Full size gallery image">
+    </div>
+</div>
+
+<footer>
+    <p>© 2026 BCA Distance Notes | Created by Ajoy & Jahangir</p>
+</footer>
+
+<script>
+    const galleryModal = document.getElementById('galleryModal');
+    const galleryImage = galleryModal.querySelector('.gallery-modal__image');
+    const closeBtn = galleryModal.querySelector('.gallery-modal__close');
+
+    document.querySelectorAll('.gallery-item').forEach((item) => {
+        item.addEventListener('click', () => {
+            const img = item.querySelector('img');
+            galleryImage.src = img.src;
+            galleryImage.alt = img.alt;
+            galleryModal.classList.add('active');
+            galleryModal.setAttribute('aria-hidden', 'false');
+        });
+    });
+
+    const closeModal = () => {
+        galleryModal.classList.remove('active');
+        galleryModal.setAttribute('aria-hidden', 'true');
+    };
+
+    closeBtn.addEventListener('click', closeModal);
+    galleryModal.addEventListener('click', (event) => {
+        if (event.target === galleryModal) {
+            closeModal();
+        }
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && galleryModal.classList.contains('active')) {
+            closeModal();
+        }
+    });
+</script>
+</body>
+</html>
